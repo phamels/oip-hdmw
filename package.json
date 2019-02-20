@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oipwg/oip-hdmw.git"
+    "url": "git+https://github.com/phamels/oip-hdmw.git"
   },
   "keywords": [
     "BIP44",
@@ -23,14 +23,15 @@
     "BIP32",
     "Bitcoin",
     "Litecoin",
-    "Flo"
+    "Flo",
+    "NIX"
   ],
   "author": "Sky Young <sky@alexandria.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/oipwg/oip-hdmw/issues"
+    "url": "https://github.com/phamels/oip-hdmw/issues"
   },
-  "homepage": "https://github.com/oipwg/oip-hdmw#readme",
+  "homepage": "https://github.com/phamels/oip-hdmw#readme",
   "dependencies": {
     "bip32": "1.0.2",
     "bip32-utils": "git+https://github.com/oipwg/bip32-utils.git",
