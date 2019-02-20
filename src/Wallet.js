@@ -11,8 +11,8 @@ import networkConfig from './networks/config'
 import TransactionBuilder from './TransactionBuilder'
 import { isEntropy, isMnemonic, isValidPublicAddress } from './util'
 
-const DEFAULT_SUPPORTED_COINS = ['bitcoin', 'litecoin', 'flo']
-const DEFAULT_SUPPORTED_TESTNET_COINS = ['bitcoin_testnet', 'flo_testnet', 'litecoin_testnet'];
+const DEFAULT_SUPPORTED_COINS = ['bitcoin', 'litecoin', 'flo', 'nix']
+const DEFAULT_SUPPORTED_TESTNET_COINS = ['bitcoin_testnet', 'flo_testnet', 'litecoin_testnet', 'nix_testnet'];
 
 /** Full Service [BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki) Multi-Coin Wallet supporting both sending and recieving payments */
 class Wallet {
@@ -44,7 +44,7 @@ class Wallet {
 	 * @param  {string|Buffer} [seed] - [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) Mnemonic, [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) Entropy, or Seed Hex/Buffer
 	 * @param  {Object} [options] - Wallet settings
 	 * @param {boolean} [options.discover=true] - Defines if the Wallet should "auto-discover" Coin Account chains or not
-	 * @param {Array.<string>} [options.supported_coins=['bitcoin', 'litecoin', 'flo']] - An Array of coins that the Wallet should support
+	 * @param {Array.<string>} [options.supported_coins=['bitcoin', 'litecoin', 'flo', 'nix']] - An Array of coins that the Wallet should support
 	 * @param {Array.<CoinInfo>} [options.networks] - An array containing a custom coins network info
 	 * @param {Object} [options.serialized_data] - A previous Wallet state to reload from
 	 *
@@ -176,7 +176,8 @@ class Wallet {
 	 * // coins = {
 	 * //	"bitcoin": Coin, 
 	 * //	"litecoin": Coin, 
-	 * //	"flo": Coin
+	 * //	"flo": Coin,
+	 * //   "nix": Coin
 	 * // }
 	 * @return {...Coin} Object containing all coins
 	 */
@@ -202,7 +203,7 @@ class Wallet {
     /**
      * Get Coin Balances
      * @param {Object} [options] - The options for searching the Balance of coins
-     * @param  {Array} [options.coins=["bitcoin", "litecoin", "flo"]] - An array of coin names you want to get the balances for. If no coins are given, an array of all available coins will be used.
+     * @param  {Array} [options.coins=["bitcoin", "litecoin", "flo", "nix"]] - An array of coin names you want to get the balances for. If no coins are given, an array of all available coins will be used.
      * @param {Boolean} [options.discover=true] - Should we attempt a new discovery, or just grab the available balances
      * @param {Boolean} [options.testnet=true] - Should we attempt to get balances for testnet coins as well (coins ending with '_testnet')
      * 
@@ -210,13 +211,14 @@ class Wallet {
      * 
      * @example
      * let wallet = new Wallet(...)
-     * wallet.getCoinBalances(["bitcoin", "litecoin", "flo"])
+     * wallet.getCoinBalances(["bitcoin", "litecoin", "flo", "nix"])
      *
      * //example return
      * {
      *      "flo": 2.16216,
      *      "bitcoin": "error fetching balance",
      *      "litecoin": 3.32211
+	 * 		"nix": 12.13423
      * }
      */
     async getCoinBalances(options = { discover: true, testnet: true }){
@@ -258,20 +260,21 @@ class Wallet {
     /**
      * Calculate Exchange Rates for supported coins
      * @param {Object} [options] - The options for getting the exchange rates
-     * @param {Array}  [options.coins=["bitcoin", "litecoin", "flo"]] - An array of coin names you want to get the balances for. If no coins are given, an array of all available coins will be used.
+     * @param {Array}  [options.coins=["bitcoin", "litecoin", "flo", "nix"]] - An array of coin names you want to get the balances for. If no coins are given, an array of all available coins will be used.
      * @param {String} [options.fiat="usd"] - The fiat type for which you wish to get the exchange rate for
      *
      * @return {Promise<Object>} Returns a Promise that will resolve to an Object containing info about each coins exchange rate, along with errors if there are any
      * 
      * @example
      * let wallet = new Wallet(...)
-     * wallet.getExchangeRates(["flo", "bitcoin", "litecoin"], "usd")
+     * wallet.getExchangeRates(["flo", "bitcoin", "litecoin", "nix"], "usd")
      *
      * //returns
      * {
      *      "flo": expect.any(Number) || "error",
      *      "bitcoin": expect.any(Number) || "error",
-     *      "litecoin": expect.any(Number) || "error"
+     *      "litecoin": expect.any(Number) || "error",
+	 * 		"nix": expect.any(Number) || "error"
      * }
      */
     async getExchangeRates( options = {fiat: "usd"} ){
@@ -309,20 +312,21 @@ class Wallet {
     /**
      * Calculate Balance of coins after exchange rate conversion
      * @param {Object} [options] - The options for getting the exchange rates
-     * @param {Array}  [options.coins=["bitcoin", "litecoin", "flo"]] - An array of coin names you want to get the balances for. If no coins are given, an array of all available coins will be used.
+     * @param {Array}  [options.coins=["bitcoin", "litecoin", "flo", "nix"]] - An array of coin names you want to get the balances for. If no coins are given, an array of all available coins will be used.
      * @param {String} [options.fiat="usd"] - The fiat type for which you wish to get the exchange rate for
      * @param {Boolean} [options.discover=true] - Should we attempt a new discovery, or just grab the available balances
      * @param {Boolean} [options.testnet=true] - should we include testnet coins?
      * @return {Promise<Object>} Returns a Promise that will resolve to the fiat balances for each coin
      * @example
      * let wallet = new Wallet(...)
-     * wallet.getFiatBalances(["flo", "bitcoin", "litecoin"], "usd")
+     * wallet.getFiatBalances(["flo", "bitcoin", "litecoin", "nix"], "usd")
      *
      * //returns
      * {
      *      "flo": expect.any(Number) || "error",
      *      "bitcoin": expect.any(Number) || "error",
-     *      "litecoin": expect.any(Number) || "error"
+     *      "litecoin": expect.any(Number) || "error",
+	 * 		"nix": expect.any(Number) || "error"
      * }
      */
     async getFiatBalances(options){
@@ -586,11 +590,14 @@ class Wallet {
 	 * @param {string} options.bitcoin_testnet - bitcoin_testnet api
 	 * @param {string} options.litecoin - litecoin api
 	 * @param {string} options.litecoin_testnet - litecoin_testnet api
+	 * @param {string} options.nix - nix api
+	 * @param {string} options.nix_testnet - nix_testnet api
 	 * @example
 	 * let options = {
 	 *     flo: 'myFloSiteApi.com/yadayada,
 	 *     bitcoin: 'myBitcoinApi.superApi/AyePeeEye',
-	 *     litecoin: 'superLightCoin.hero'
+	 *     litecoin: 'superLightCoin.hero',
+	 * 	   nix: 'nixinsightexplorer.site/blabla'
 	 * }
 	 * new Wallet(mnemonic, {discover: false}).setNetworkApi(options)
 	 */

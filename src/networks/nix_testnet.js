@@ -1,18 +1,17 @@
 import { Insight } from 'insight-explorer'
-import bip44constants from 'bip44-constants'
 import config from './config'
 
-var bitcoinFeePerKb = 100000
+var nixFeePerKb = 100000
 
 module.exports = {
 	name: 'nix_testnet',
 	displayName: 'NIX Testnet',
 	ticker: 'tNIX',
 	satPerCoin: 1e8,
-	feePerKb: bitcoinFeePerKb,
-	feePerByte: bitcoinFeePerKb / 1024,
+	feePerKb: nixFeePerKb,
+	feePerByte: nixFeePerKb / 1024,
 	maxFeePerByte: 100,
-	minFee: bitcoinFeePerKb,
+	minFee: nixFeePerKb,
 	dust: 546,
 
 	txVersion: 1,
