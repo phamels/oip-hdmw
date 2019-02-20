@@ -5,6 +5,8 @@ module.exports = {
 		flo: 'https://livenet.flocha.in/api',
 		flo_testnet: 'https://testnet.flocha.in/api',
 		litecoin: 'https://litesight.failover.alexandria.io/api',
-		litecoin_testnet: 'https://litesight.mk1.alexandria.io/api'
+		litecoin_testnet: 'https://litesight.mk1.alexandria.io/api',
+		nix: 'https://blockchain.nixplatform.io/api',
+		nix_testnet: 'https://blockchain.testnet.nixplatform.io/api'
 	},
 }
