@@ -28,8 +28,8 @@ module.exports = {
 		},
 		slip44: 1,
 		messagePrefix: '\u001bNIX Signed Message:\n',
-		pubKeyHash: 01,
-		scriptHash: 03,
+		pubKeyHash: 1,
+		scriptHash: 3,
 		wif: 80
 	}
 }
