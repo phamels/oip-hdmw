@@ -1,6 +1,4 @@
 import { Insight } from 'insight-explorer'
-import coininfo from 'coininfo'
-import bip44constants from 'bip44-constants'
 import config from './config'
 
 var nixFeePerKb = 100000
