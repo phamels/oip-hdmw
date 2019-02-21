@@ -25,10 +25,10 @@ module.exports = {
 			public: 0x0488b21e,
 			private: 0x0488ade4
 		},
-		slip44: 44,
+		slip44: 400,
 		messagePrefix: '\u001bNIX Signed Message:\n',
-		pubKeyHash: 26,
-		scriptHash: 35,
+		pubKeyHash: 53,
+		scriptHash: 38,
 		wif: 80
 	}
 }
